@@ -40,7 +40,7 @@ class FoodDatabase:
                                      "protein": nutrition_info["PROCNT"],
                                      "fat": nutrition_info["FAT"]}
             return self.foods[food_name]
-        
+
         else:  # failed search
             self.foods[food_name] = None
             return None
