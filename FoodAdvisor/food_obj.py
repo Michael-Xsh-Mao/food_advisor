@@ -5,5 +5,6 @@ class food_obj:
         self.caloric_density = caloric_density #cals/gram
         self.expiration_date = expiration_date #datetime of expire date
         self.nutritional_information = nutritional_information #nutrition object
-        self.calories = caloric_density * weight
 
+    def getCals(self):
+        return self.caloric_density * self.weight
