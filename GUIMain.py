@@ -61,7 +61,7 @@ class GUIMain:
 
         # Inventory Status
         inventory_status_label = tk.Label(sidebar, text='Inventory Status',
-                              bg="#CCC", font=('bold', 14), pady=5, padx=5)
+                                          bg="#CCC", font=('bold', 14), pady=5, padx=5)
         inventory_status_label.grid(row=10, column=0, sticky="w")
 
         food_quantity_label = tk.Label(sidebar, text='   - You have no food!', bg="#CCC")
@@ -75,8 +75,24 @@ class GUIMain:
         more_info_label = tk.Label(sidebar, text='        more info in details tab', bg="#CCC", font=('italic', 8))
         more_info_label.grid(row=13, column=0, sticky="w")
 
+        self.update_gui_info()
+
     def update_gui_info(self):
-        pass
+        personal_info = self.controller.personal_needs()
+        self.gui_info[0]['text'] = "   - Name: " + personal_info[0]
+        self.gui_info[1]['text'] = "     - Protein: " + personal_info[1] + "g"
+        self.gui_info[2]['text'] = "     - Calories: " + personal_info[2] + "kcal"
+        self.gui_info[3]['text'] = "     - Fat: " + personal_info[3] + "g"
+
+        personal_info = self.controller.nutrient_info()
+        self.gui_info[4]['text'] = "   - Protein: " + personal_info[1] + "g"
+        self.gui_info[5]['text'] = "   - Calories: " + personal_info[0] + "kcal"
+        self.gui_info[6]['text'] = "   - Fat: " + personal_info[2] + "g"
+
+        personal_info = self.controller.inventory_status()
+        self.gui_info[7]['text'] = "   - " + personal_info[0]
+        self.gui_info[8]['text'] = "   - " + personal_info[1]
+
 
     def setup_main_area(self):
         main_area = tk.Frame(self.root, height=500, width=500, relief="sunken", border=2)
@@ -166,30 +182,24 @@ class GUIMain:
         expiration_label = tk.Label(food_management_screen, text='Expiration Date (for adding food): ')
         expiration_label.grid(row=2, column=0, sticky="w")
 
-        date_label = tk.Label(food_management_screen, text='dd/mm/yyyy')
+        date_label = tk.Label(food_management_screen, text='yyyy-mm-dd')
         date_label.grid(row=3, column=0, sticky="w")
 
-        day_entry = tk.Entry(food_management_screen, bd=2)
-        day_entry.grid(row=3, column=1, sticky="w")
+        date_entry = tk.Entry(food_management_screen, bd=2)
+        date_entry.grid(row=3, column=1, sticky="w")
 
-        month_entry = tk.Entry(food_management_screen, bd=2)
-        month_entry.grid(row=4, column=1, sticky="w")
-
-        year_entry = tk.Entry(food_management_screen, bd=2)
-        year_entry.grid(row=5, column=1, sticky="w")
-
-        screen_elements = [name_entry, quantity_entry, day_entry, month_entry, year_entry]
+        screen_elements = [name_entry, quantity_entry, date_entry]
 
         add_button = tk.Button(food_management_screen, text="Add Food",
-                                  command=lambda: self.add_food(screen_elements))
-        add_button.grid(row=6, column=1)
+                               command=lambda: self.add_food(screen_elements))
+        add_button.grid(row=4, column=1)
 
         eaten_button = tk.Button(food_management_screen, text="Eaten Food",
-                               command=lambda: self.ate_food(screen_elements[:2]))
-        eaten_button.grid(row=6, column=1)
+                                 command=lambda: self.ate_food(screen_elements[:2]))
+        eaten_button.grid(row=5, column=1)
 
         remove_button = tk.Button(food_management_screen, text="Remove Food",
-                               command=lambda: self.remove_food(screen_elements[:2]))
+                                  command=lambda: self.remove_food(screen_elements[:2]))
         remove_button.grid(row=6, column=1)
 
     def setup_warnings_screen(self):
@@ -212,22 +222,26 @@ class GUIMain:
 
     def add_food(self, screen_elements):
         extract_screen_elements_info(screen_elements)
-        # TODO: call sm other function
+        self.controller.add_food(screen_elements[0], screen_elements[1], screen_elements[2])
+        self.update_gui_info()
 
     def ate_food(self, screen_elements):
         extract_screen_elements_info(screen_elements)
-        # TODO: call sm other function
+        self.controller.eat_food(screen_elements[0], screen_elements[1])
+        self.update_gui_info()
 
     def remove_food(self, screen_elements):
         extract_screen_elements_info(screen_elements)
-        # TODO: call sm other function
+        self.controller.trash_food(screen_elements[0], screen_elements[1])
+        self.update_gui_info()
 
     def update_main_area(self, screen):
         pass
 
     def update_info(self, screen_elements):
         extract_screen_elements_info(screen_elements)
-        # TODO: call controller function
+        self.controller.enter_personal_info(screen_elements)
+        self.update_gui_info()
 
 
 def extract_screen_elements_info(screen_elements):
