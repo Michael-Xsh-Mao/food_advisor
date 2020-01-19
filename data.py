@@ -96,3 +96,11 @@ class Data:
 
     def set_profile(self, name, sex, age, weight, height, activity):
         self.profile.set_parameters(name, sex, age, weight, height, activity)
+
+    ### Summary Info ###
+    def summation(self):
+        final_list = []
+        for i in range(0, len(self.inventory.food_names())):
+            final_list.append("{}    {}    {}".format(self.inventory.food_names[i], self.inventory.food_weights[i],
+                                                      self.inventory.food_expiration_dates[i]))
+        return final_list

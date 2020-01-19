@@ -60,6 +60,8 @@ class Controller:
         self.d.set_profile(info[0], info[1], info[2], info[3], info[4], info[5])
 
     ### Summation information about all food items ###
+    def get_summation_strings(self):
+        return self.d.summation()
 
 
 
