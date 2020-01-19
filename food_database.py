@@ -12,12 +12,9 @@ class FoodDatabase:
 
     foods = {}
 
-    def __init__(self):
-        self.foods = {}
-
     """
     Searches internal database, then Edamam API for given food,
-    and returns the results (or NULL if no result can be found)
+    and returns the results (or None if no result can be found)
     """
     def search_food(self, food_name):
         # sanitize text
@@ -39,9 +36,9 @@ class FoodDatabase:
         if response == 200 and response.json()['parsed']:  # successful search
             nutrition_info = response.json()['parsed'][0]['food']['nutrients']
 
-            self.foods[food_name] = Nutrition(nutrition_info["ENERC_KCAL"]/100,
-                                              nutrition_info["PROCNT"]/100,
-                                              nutrition_info["FAT"]/100)
+            self.foods[food_name] = {"calories": nutrition_info["ENERC_KCAL"]/100,
+                                     "protein": nutrition_info["PROCNT"]/100,
+                                     "fat": nutrition_info["FAT"]/100}
             return self.foods[food_name]
 
         else:  # failed search
