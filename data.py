@@ -6,13 +6,12 @@ from datetime import date
 
 class Data:
     cals_today, fats_today, proteins_today = 0, 0, 0
-    last_day = date(0-0-0)
 
     def __init__(self):
         self.inventory = Inventory()
         self.profile = Profile()
         self.database = FoodDatabase()
-        last_day = date.today()
+        self.last_day = date.today()
 
     ########## adding/removing food to inventory ##########
     def add_food(self, name, weight, expiration_date):

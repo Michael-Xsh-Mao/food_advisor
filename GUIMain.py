@@ -1,10 +1,13 @@
 import tkinter as tk
+from Controller import Controller
 
 
 class GUIMain:
 
-    def __init__(self):
+    def __init__(self, controller):
         self.root = tk.Tk()
+        self.controller = controller
+        self.gui_info = []
 
     def setup_GUI(self):
         self.root.title("Brocado")
@@ -22,18 +25,22 @@ class GUIMain:
 
         name_label = tk.Label(sidebar, text='   - Name: Tomato', bg="#CCC")
         name_label.grid(row=1, column=0, sticky="w")
+        self.gui_info.append(name_label)
 
         energy_needs_label = tk.Label(sidebar, text='   - Daily Requirements', bg="#CCC")
         energy_needs_label.grid(row=2, column=0, sticky="w")
 
         protein_needs_label = tk.Label(sidebar, text='     - Protein: 5g', bg="#CCC")
         protein_needs_label.grid(row=3, column=0, sticky="w")
+        self.gui_info.append(protein_needs_label)
 
         calorie_needs_label = tk.Label(sidebar, text='     - Calories: 2000', bg="#CCC")
         calorie_needs_label.grid(row=4, column=0, sticky="w")
+        self.gui_info.append(calorie_needs_label)
 
         fat_needs_label = tk.Label(sidebar, text='     - Fat: 5g', bg="#CCC")
         fat_needs_label.grid(row=5, column=0, sticky="w")
+        self.gui_info.append(fat_needs_label)
 
         # Today's Consumption
         info_label = tk.Label(sidebar, text='Consumed Today',
@@ -42,12 +49,15 @@ class GUIMain:
 
         protein_consumed_label = tk.Label(sidebar, text='   - Protein: 70g', bg="#CCC")
         protein_consumed_label.grid(row=7, column=0, sticky="w")
+        self.gui_info.append(protein_consumed_label)
 
         calorie_consumed_label = tk.Label(sidebar, text='   - Calories: 20000', bg="#CCC")
         calorie_consumed_label.grid(row=8, column=0, sticky="w")
+        self.gui_info.append(calorie_consumed_label)
 
         fat_consumed_label = tk.Label(sidebar, text='   - Fat: 5g', bg="#CCC")
         fat_consumed_label.grid(row=9, column=0, sticky="w")
+        self.gui_info.append(fat_consumed_label)
 
         # Inventory Status
         inventory_status_label = tk.Label(sidebar, text='Inventory Status',
@@ -56,12 +66,17 @@ class GUIMain:
 
         food_quantity_label = tk.Label(sidebar, text='   - You have no food!', bg="#CCC")
         food_quantity_label.grid(row=11, column=0, sticky="w")
+        self.gui_info.append(food_quantity_label)
 
         expiration_label = tk.Label(sidebar, text='   - Nothing Expiring!', bg="#CCC")
         expiration_label.grid(row=12, column=0, sticky="w")
+        self.gui_info.append(expiration_label)
 
         more_info_label = tk.Label(sidebar, text='        more info in details tab', bg="#CCC", font=('italic', 8))
         more_info_label.grid(row=13, column=0, sticky="w")
+
+    def update_gui_info(self):
+        pass
 
     def setup_main_area(self):
         main_area = tk.Frame(self.root, height=500, width=500, relief="sunken", border=2)
@@ -225,6 +240,7 @@ def tomate():
 
 
 if __name__ == '__main__':
-    gui = GUIMain()
+    control = Controller()
+    gui = GUIMain(control)
     gui.setup_GUI()
     gui.root.mainloop()
