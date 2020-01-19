@@ -1,5 +1,5 @@
 from datetime import date
-import food_obj
+import food
 
 
 class Inventory:
