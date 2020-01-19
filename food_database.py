@@ -1,5 +1,4 @@
 import requests
-from nutrition import Nutrition
 
 
 """
@@ -33,7 +32,7 @@ class FoodDatabase:
         retrieval_url = setup_retrieval_url(food_name)
         response = requests.get(retrieval_url)
 
-        if response == 200 and response.json()['parsed']:  # successful search
+        if response.status_code == 200 and response.json()['parsed']:  # successful search
             nutrition_info = response.json()['parsed'][0]['food']['nutrients']
 
             self.foods[food_name] = {"calories": nutrition_info["ENERC_KCAL"]/100,
@@ -42,7 +41,6 @@ class FoodDatabase:
             return self.foods[food_name]
 
         else:  # failed search
-            self.foods[food_name] = None
             return None
 
 

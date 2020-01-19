@@ -1,1 +1,0 @@
-print("{}adaada".format((str)(1)))
