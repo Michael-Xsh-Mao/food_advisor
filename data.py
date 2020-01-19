@@ -35,9 +35,11 @@ class data:
         warnings.extend(self.inventory.caloric_warnings())
         warnings.extend(self.inventory.expiration_warnings())
         return warnings
-
+    """returns predicted cals remaining on *day* days from today """
     def get_cals_on_day(self, day):
-        
+        cal_report = self.inventory.generate_cal_report()
+        return cal_report[day]
+
     def get_caloric_need(self):
         return self.profile.calculate_caloric_need()
 

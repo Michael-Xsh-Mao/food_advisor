@@ -15,10 +15,6 @@ class Inventory:
     def updateDate(self):
         self.current_date = date.today()
 
-    def set_caloric_consumption(self, cals):
-        # get the cals/day from profile obj
-        self.caloric_consumption = cals
-
     def add_food(self, food_item):
         self.inventory.append(food_item)
 
