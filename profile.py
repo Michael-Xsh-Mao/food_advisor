@@ -19,6 +19,14 @@ class Profile:
     name = ""
 
     """ ALL UNITS ARE IN METRIC: weight - kg, height - cm"""
+    def __init__(self):
+        self.name = ""
+        self.weight = 0
+        self.sex = ""
+        self.height = 0
+        self.age = 0
+        self.activity = 0
+        self.protein_coef = 0
 
     def set_parameters(self, name, sex, age, weight, height, activity):
         self.name = name
