@@ -1,18 +1,18 @@
 from data import Data
-from GUIMain import GUIMain
 import pickle
+from datetime import date, datetime
+
 
 class Controller:
-    GUI = GUIMain()
 
     def __init__(self):
         self.d = None
         try:
-            self.d = pickle.load(open("inventory_pickled.py", "rb"))
+            self.d = pickle.load(open("inventory_pickled.p", "rb"))
         except pickle.UnpicklingError:
             self.d = Data()
-
-
+        except FileNotFoundError:
+            self.d = Data()
 
     ### STUFF TO SEND TO GUI ###
 
@@ -51,24 +51,24 @@ class Controller:
     ####### RECEIVING FROM GUI ######
     ### Food added/eaten/trashed ###
     def add_food(self, name, weight, expiration_date):
-        self.d.add_food(name, weight, expiration_date)
+        exp_date = datetime.strptime(expiration_date, '%Y-%m-%d')
+        self.d.add_food(name, weight, exp_date.date())
+        pickle.dump(self.d, open("inventory_pickled.p", "wb"))
 
     def eat_food(self, name, weight):
         self.d.eat_food(name, weight)
+        pickle.dump(self.d, open("inventory_pickled.p", "wb"))
 
     def trash_food(self, name, weight):
         self.d.throw_out_food(name, weight)
+        pickle.dump(self.d, open("inventory_pickled.p", "wb"))
 
     ### Personal info to add to profile ###
     def enter_personal_info(self, info):
         self.d.set_profile(info[0], info[1], info[2], info[3], info[4], info[5])
         self.d.update_consumptions()
-
-
+        pickle.dump(self.d, open("inventory_pickled.p", "wb"))
 
     ### Summation information about all food items ###
     def get_summation_strings(self):
         return self.d.summation()
-
-
-

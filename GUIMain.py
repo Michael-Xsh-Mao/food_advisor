@@ -80,14 +80,14 @@ class GUIMain:
     def update_gui_info(self):
         personal_info = self.controller.personal_needs()
         self.gui_info[0]['text'] = "   - Name: " + personal_info[0]
-        self.gui_info[1]['text'] = "     - Protein: " + personal_info[1] + "g"
-        self.gui_info[2]['text'] = "     - Calories: " + personal_info[2] + "kcal"
-        self.gui_info[3]['text'] = "     - Fat: " + personal_info[3] + "g"
+        self.gui_info[1]['text'] = "     - Protein: " + str(personal_info[1]) + "g"
+        self.gui_info[2]['text'] = "     - Calories: " + str(personal_info[2]) + "kcal"
+        self.gui_info[3]['text'] = "     - Fat: " + str(personal_info[3]) + "g"
 
         personal_info = self.controller.nutrient_info()
-        self.gui_info[4]['text'] = "   - Protein: " + personal_info[1] + "g"
-        self.gui_info[5]['text'] = "   - Calories: " + personal_info[0] + "kcal"
-        self.gui_info[6]['text'] = "   - Fat: " + personal_info[2] + "g"
+        self.gui_info[4]['text'] = "   - Protein: " + str(personal_info[1]) + "g"
+        self.gui_info[5]['text'] = "   - Calories: " + str(personal_info[0]) + "kcal"
+        self.gui_info[6]['text'] = "   - Fat: " + str(personal_info[2]) + "g"
 
         personal_info = self.controller.inventory_status()
         self.gui_info[7]['text'] = "   - " + personal_info[0]
@@ -137,9 +137,9 @@ class GUIMain:
         sex_label.grid(row=4, column=0, sticky="w")
 
         sex_var = tk.IntVar()
-        sex_male_rb = tk.Radiobutton(personal_info_screen, variable=sex_var, text="Male", value="male")
+        sex_male_rb = tk.Radiobutton(personal_info_screen, variable=sex_var, text="Male", value=1)
         sex_male_rb.grid(row=4, column=1, sticky="w")
-        sex_female_rb = tk.Radiobutton(personal_info_screen, variable=sex_var, text="Female", value="female")
+        sex_female_rb = tk.Radiobutton(personal_info_screen, variable=sex_var, text="Female", value=2)
         sex_female_rb.grid(row=5, column=1, sticky="w")
 
         active_label = tk.Label(personal_info_screen, text='Activity Level (1 lowest, 5 highest): ')
@@ -221,34 +221,43 @@ class GUIMain:
         scrollbar.config(command=warning_list.yview)
 
     def add_food(self, screen_elements):
-        extract_screen_elements_info(screen_elements)
-        self.controller.add_food(screen_elements[0], screen_elements[1], screen_elements[2])
+        screen_elements = extract_screen_elements_info(screen_elements)
+        self.controller.add_food(screen_elements[0],
+                                 float(screen_elements[1]),
+                                 screen_elements[2])
         self.update_gui_info()
 
     def ate_food(self, screen_elements):
-        extract_screen_elements_info(screen_elements)
-        self.controller.eat_food(screen_elements[0], screen_elements[1])
+        screen_elements = extract_screen_elements_info(screen_elements)
+        self.controller.eat_food(screen_elements[0], float(screen_elements[1]))
         self.update_gui_info()
 
     def remove_food(self, screen_elements):
-        extract_screen_elements_info(screen_elements)
-        self.controller.trash_food(screen_elements[0], screen_elements[1])
+        screen_elements = extract_screen_elements_info(screen_elements)
+        self.controller.trash_food(screen_elements[0], float(screen_elements[1]))
         self.update_gui_info()
 
     def update_main_area(self, screen):
         pass
 
     def update_info(self, screen_elements):
-        extract_screen_elements_info(screen_elements)
+        screen_elements = extract_screen_elements_info(screen_elements)
+        screen_elements[1] = "male" if screen_elements[1] == 1 else "female"
+        for i in range(2,5):
+            screen_elements[i] = float(screen_elements[i])
         self.controller.enter_personal_info(screen_elements)
+
         self.update_gui_info()
 
 
 def extract_screen_elements_info(screen_elements):
+    converted_elements = []
     for i, element in enumerate(screen_elements):
-        screen_elements[i] = element.get()
+        converted_elements.append(element.get())
 
+    return converted_elements
 
+str()
 def tomate():
     print("You say Tomate, I say Potate!")
 
