@@ -7,6 +7,15 @@ class Profile:
             4: 1.725,
             5: 1.9
         }
+    protein_levels = \
+        {
+            1: .8,
+            2: 1.3,
+            3: 1.5,
+            4: 1.7,
+            5: 1.9
+        }
+    protein_coef = .8
     name = ""
     def __init__(self):
         pass
@@ -21,7 +30,9 @@ class Profile:
         self.height = height
         self.age = age
         self.activity = self.activity_levels.get(activity)
+        self.protein_coef = self.protein_levels.get(activity)
 
+    """calculate cal needs"""
     def calculate_caloric_need(self):
         BMR = 0
         if self.sex == "male":
@@ -30,4 +41,16 @@ class Profile:
             BMR = 665 + (4.3 * self.weight) + (4.7 * self.height) - (4.7 * self.age)
         return BMR * self.activity
 
-            
+    """calculate protein needs in grams"""
+    def calculate_protein_need(self):
+        return self.weight / 0.8 * self.protein_coef
+
+    """calculate fat needs in grams"""
+    def calculate_fat_need(self):
+        fat_coef = 0
+        if(self.age < 19):
+            fat_coef = .32
+        else:
+            fat_coef = .25
+
+        return fat_coef * self.calculate_caloric_need() / 9

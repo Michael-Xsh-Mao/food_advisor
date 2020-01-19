@@ -1,4 +1,7 @@
 from datetime import date
+from datetime import datetime
+from datetime import timedelta
+
 from food import Food
 
 
@@ -8,6 +11,8 @@ class Inventory:
     inventory = []
     calories_total = 0
     caloric_consumption = 0
+    protein_consumption = 0
+    fats_consumption = 0
 
     # ################            UPDATE PARAMETERS            ################ #
     """ adds a food object to inventory """
@@ -20,7 +25,7 @@ class Inventory:
         calories_consumed = days * self.caloric_consumption
         calories_remaining = 0
         for item in self.inventory:
-            if (item.expiration_date - date.today()) > 0:
+            if item.expiration_date >= date.today() + timedelta(days=days):
                 calories_remaining += item.getCals()
         return max(calories_remaining - calories_consumed, 0)
 
@@ -90,9 +95,38 @@ class Inventory:
     """returns how many days until cals are expected to be consumed"""
     def out_of_cals(self):
         for i in range(0, 9):
-            if(self.report_calories() < self.caloric_consumption):
+            if(self.report_calories(i) < self.caloric_consumption):
                 return i
         return 10
+
+    """days till protein expected to run out"""
+    def out_of_protein(self):
+        for i in range(0, 9):
+            protein_availible = 0
+            for item in self.inventory:
+                if item.expiration_date >= date.today() + timedelta(days=i):
+                    protein_availible += item.nutritional_information.get("protein")
+            protein_availible -= i * self.protein_consumption
+
+            if protein_availible < self.protein_consumption:
+                return i
+        return 10
+
+    """days till fats expected to run out"""
+    def out_of_fat(self):
+        for i in range(0, 9):
+            fat_availible = 0
+            for item in self.inventory:
+                if item.expiration_date >= date.today() + timedelta(days=i):
+                    fat_availible += item.nutritional_information.get("fat")
+            fat_availible -= i * self.fats_consumption
+
+            if fat_availible < self.fats_consumption:
+                return i
+        return 10
+
+
+
 
         
     

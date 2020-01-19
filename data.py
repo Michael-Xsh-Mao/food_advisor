@@ -22,8 +22,10 @@ class Data:
         self.inventory.add_food(new_food)
 
     ############## UPDATE PARAMETERS IN INVENTORY AND PROFILE ABOUT EACH OTHER ###################
-    def update_caloric_need(self):
+    def update_consumptons(self):
         self.inventory.caloric_consumption = self.profile.calculate_caloric_need()
+        self.inventory.fats_consumption = self.profile.calculate_fat_need()
+        self.inventory.protein_consumption = self.profile.calculate_protein_need()
 
     ### GET WARNINGS FOR TODAY ###
     def get_caloric_warnings(self):
@@ -41,9 +43,19 @@ class Data:
         expired_days = self.inventory.report_expirations()
         return expired_days[day] # of form (name, weight)
 
-    """returns number of days until out of calories, if 10 then there are more than 9 days left"""
-    def get_cals_out(self):
+
+
+    """returns number of days until out of calories, if 10 then there are more than 9 days left
+    Same for following methods about protein and fats."""
+
+    def get_cals_gone(self):
         return self.inventory.out_of_cals()
+
+    def get_protein_gone(self):
+        return self.inventory.out_of_protein()
+
+    def get_fats_gone(self):
+        return self.inventory.out_of_fats()
 
     ### GET AND SET INFORMATION ABOUT PROFILE
     def get_caloric_need(self):
