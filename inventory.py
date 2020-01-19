@@ -91,6 +91,18 @@ class Inventory:
     def get_nutrients(self):
         nutrients = (0, 0)
 
+    """true when food for 1 more day only remains"""
+    def low_food_warning(self):
+        if self.report_calories(1) < self.caloric_consumption:
+            return True
+        return False
+
+    """true when stuff expiring today"""
+    def expiration_today_warning(self):
+        if len(self.report_expirations()[0] > 0):
+            return True
+        return False
+
     ### HOW MANY DAYS TILL STUFF RUNS OUT ###
     """returns how many days until cals are expected to be consumed"""
     def out_of_cals(self):

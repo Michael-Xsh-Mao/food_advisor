@@ -34,6 +34,12 @@ class Data:
     def get_expiration_warnings(self):
         return self.inventory.get_expiration_warnings()
 
+    def is_low_food(self):
+        return self.inventory.low_food_warning()
+
+    def is_expiring(self):
+        return self.inventory.expiration_today_warning()
+
     ### GET CALENDAR INFORMATION ###
     def get_cals_on_day(self, day):
         cal_report = self.inventory.generate_cal_report()
@@ -60,6 +66,12 @@ class Data:
     ### GET AND SET INFORMATION ABOUT PROFILE
     def get_caloric_need(self):
         return self.profile.calculate_caloric_need()
+
+    def get_fat_need(self):
+        return self.profile.calculate_fat_need()
+
+    def get_protein_need(self):
+        return self.profile.calculate_protein_need()
 
     def set_profile(self, name, sex, age, weight, height, activity):
         self.profile.set_parameters(name, sex, age, weight, height, activity)
