@@ -10,9 +10,6 @@ class Data:
         self.profile = Profile()
         self.database = FoodDatabase()
 
-    def set_profile(self, name, sex, age, weight, height, activity):
-        self.profile.set_parameters(name, sex, age, weight, height, activity)
-
     ########## adding new food to inventory ##########
     def add_food(self, name, weight, expiration_date):
         nutrients = self.database.search_food(name)
@@ -27,15 +24,29 @@ class Data:
     def update_caloric_need(self):
         self.inventory.caloric_consumption = self.profile.calculate_caloric_need()
 
-    ### GET INFORMATION ABOUT INVENTORY ###
-    def get_warnings(self):
-        warnings = []
-        warnings.extend(self.inventory.caloric_warnings())
-        warnings.extend(self.inventory.expiration_warnings())
-        return warnings
+    ### GET WARNINGS FOR TODAY ###
+    def get_caloric_warnings(self):
+        return self.inventory.get_caloric_warnings()
 
+    def get_expiration_warnings(self):
+        return self.inventory.get_expiration_warnings()
+
+    ### GET CALENDAR INFORMATION ###
     def get_cals_on_day(self, day):
+        cal_report = self.inventory.generate_cal_report()
+        return cal_report[day]
 
+    def get_expired_on_day(self, day):
+        expired_days = self.inventory.report_expirations()
+        return expired_days[day] # of form (name, weight)
+
+    """returns number of days until out of calories, if 10 then there are more than 9 days left"""
+    def get_cals_out(self):
+        return self.inventory.out_of_cals()
+
+    ### GET AND SET INFORMATION ABOUT PROFILE
     def get_caloric_need(self):
         return self.profile.calculate_caloric_need()
 
+    def set_profile(self, name, sex, age, weight, height, activity):
+        self.profile.set_parameters(name, sex, age, weight, height, activity)

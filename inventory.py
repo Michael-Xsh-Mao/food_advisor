@@ -32,7 +32,7 @@ class Inventory:
         return caloric_report
 
     """ gives warnings of when food is running low """
-    def caloric_warnings(self):
+    def get_caloric_warnings(self):
         cal_report = self.generate_cal_report()
         if cal_report[0] < self.caloric_consumption:
             print("LESS THAN ONE DAY OF FOOD")
@@ -60,13 +60,13 @@ class Inventory:
         return expirations
 
     """ returns a list of foods expiring in the next 3 days """
-    def expiration_warnings(self):
+    def get_expiration_warnings(self):
         expirations = self.report_expirations()
         for item in expirations[0]:
             print("{} gram(s) of {} is expiring today!".format(item[1], item[0]))
         expiry_count = 0
         for day in range(0,3):
-            for item in expirations[day]:
+            for _ in expirations[day]:
                 expiry_count += 1
         print("{} item(s) are expiring in 3 days".format(str(expiry_count)))
 
@@ -82,6 +82,17 @@ class Inventory:
     def get_number_expired(self):
         return len(self.get_expired_food())
 
+    """ get the current amount of nutrients"""
+    def get_nutrients(self):
+        nutrients = (0, 0)
+
+    ### HOW MANY DAYS TILL STUFF RUNS OUT ###
+    """returns how many days until cals are expected to be consumed"""
+    def out_of_cals(self):
+        for i in range(0, 9):
+            if(self.report_calories() < self.caloric_consumption):
+                return i
+        return 10
 
         
     
