@@ -139,7 +139,7 @@ class Inventory:
         for i in range(0, 10):
             if(self.report_calories(i) < self.caloric_consumption):
                 return str(i)
-        return "more than 10"
+        return "more than 10 days before caloric shortage"
 
     """days till protein expected to run out"""
     def protein_days_remaining(self):
@@ -152,7 +152,7 @@ class Inventory:
 
             if protein_availible < self.protein_consumption:
                 return str(i)
-        return "more than 10"
+        return "more than 10 days before protein shortage"
 
     """days till fats expected to run out"""
     def fats_days_remaining(self):
@@ -165,7 +165,7 @@ class Inventory:
 
             if fat_available < self.fats_consumption:
                 return str(i)
-        return "more than 10"
+        return "more than 10 days before fat shortage"
 
     """List of all food items in order"""
     def food_names(self):

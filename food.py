@@ -25,4 +25,4 @@ class Food:
         self.nutritional_information["calories"] *= remaining
         self.nutritional_information["fat"] *= remaining
         self.nutritional_information["protein"] *= remaining
-        return (cal_consumed, protein_consumed, fat_consumed)
+        return cal_consumed, protein_consumed, fat_consumed

@@ -47,6 +47,7 @@ class Controller:
         warnings_list.append("{} item(s) are expired!".format(str(len(self.d.inventory.get_expired_food()))))
         warnings_list.extend(self.d.inventory.get_expiration_warnings_1day())
 
+        return warnings_list
 
     ####### RECEIVING FROM GUI ######
     ### Food added/eaten/trashed ###
