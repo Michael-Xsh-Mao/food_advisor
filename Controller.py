@@ -7,6 +7,7 @@ class Controller:
 
     def __init__(self):
         # TODO PIckle file if it exists!
+        """make new Data obj if no pickle file"""
         pass
 
 
