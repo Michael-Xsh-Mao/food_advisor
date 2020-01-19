@@ -16,6 +16,7 @@ class GUIMain:
         self.setup_personal_info_screen()
         self.setup_food_management()
         self.setup_warnings_screen()
+        self.setup_storage_screen()
 
     def setup_sidebar(self):
         sidebar = tk.Frame(self.root, height=500, width=300, bg="#CCC")
@@ -102,6 +103,12 @@ class GUIMain:
             self.listboxes['warning'].delete(0, tk.END)
             for line in self.controller.get_all_warnings():
                 self.listboxes['warning'].insert(tk.END, line)
+
+        # update storage
+        if 'storage' in self.listboxes:
+            self.listboxes['storage'].delete(0, tk.END)
+            for line in self.controller.get_summation_strings():
+                self.listboxes['storage'].insert(tk.END, line)
 
 
     def setup_personal_info_screen(self):
@@ -214,7 +221,7 @@ class GUIMain:
         scrollbar = tk.Scrollbar(warnings_screen)
         scrollbar.pack(side="right", fill="y")
 
-        warning_list = tk.Listbox(warnings_screen, yscrollcommand=scrollbar.set, width=50)
+        warning_list = tk.Listbox(warnings_screen, yscrollcommand=scrollbar.set, width=30)
         self.listboxes["warning"] = warning_list
 
         for line in self.controller.get_all_warnings():
@@ -222,6 +229,22 @@ class GUIMain:
 
         warning_list.pack(side="left", fill="both")
         scrollbar.config(command=warning_list.yview)
+
+    def setup_storage_screen(self):
+        storage_screen = tk.Frame(self.root, height=500, width=500, relief="sunken", border=2)
+        storage_screen.pack(expand=False, fill="both", side="right")
+
+        scrollbar = tk.Scrollbar(storage_screen)
+        scrollbar.pack(side="right", fill="y")
+
+        storage_list = tk.Listbox(storage_screen, yscrollcommand=scrollbar.set, width=30)
+        self.listboxes["storage"] = storage_list
+
+        for line in self.controller.get_summation_strings():
+            storage_list.insert(tk.END, line)
+
+        storage_list.pack(side="left", fill="both")
+        scrollbar.config(command=storage_list.yview)
 
     def add_food(self, screen_elements):
         screen_elements = extract_screen_elements_info(screen_elements)
