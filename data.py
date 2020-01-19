@@ -10,8 +10,7 @@ class Data:
         self.profile = Profile()
         self.database = FoodDatabase()
 
-    ########## adding new food to in
-    # ventory ##########
+    ########## adding new food to inventory ##########
     def add_food(self, name, weight, expiration_date):
         nutrients = self.database.search_food(name)
         if nutrients is None:
@@ -54,14 +53,14 @@ class Data:
     """returns number of days until out of calories, if 10 then there are more than 9 days left
     Same for following methods about protein and fats."""
 
-    def get_cals_gone(self):
-        return self.inventory.out_of_cals()
+    def cals_days_remaining(self):
+        return self.inventory.cals_days_remaining()
 
-    def get_protein_gone(self):
-        return self.inventory.out_of_protein()
+    def protein_days_remaining(self):
+        return self.inventory.protein_days_remaining()
 
-    def get_fats_gone(self):
-        return self.inventory.out_of_fats()
+    def fats_days_remaining(self):
+        return self.inventory.fats_days_remaining()
 
     ### GET AND SET INFORMATION ABOUT PROFILE
     def get_caloric_need(self):

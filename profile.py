@@ -17,12 +17,8 @@ class Profile:
         }
     protein_coef = .8
     name = ""
-    def __init__(self):
-        pass
 
     """ ALL UNITS ARE IN METRICT: weight - kg, height - cm"""
-    def __init__(self, name, sex, age, weight, height, activity):
-        self.set_parameters(name, sex, age, weight, height, activity)
 
     def set_parameters(self, name, sex, age, weight, height, activity):
         self.name = name

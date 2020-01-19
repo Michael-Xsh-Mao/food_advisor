@@ -64,15 +64,19 @@ class Inventory:
                 expirations[days_till_expiry].append((food.name, food.weight))
         return expirations
 
-    """ returns a list of foods expiring in the next 3 days """
-    def get_expiration_warnings(self):
-        expirations = self.report_expirations()
+    """ returns a list of foods expiring in the next 1 day  """
+    def get_expiration_warnings_1day(self):
+        return self.report_expirations()[0]
         for item in expirations[0]:
             print("{} gram(s) of {} is expiring today!".format(item[1], item[0]))
+
+    """ returns a list of foods expiring in the next 3 days """
+    def get_expiration_warnings_3day(self):
+        expirations = self.report_expirations()
+
         expiry_count = 0
-        for day in range(0,3):
-            for _ in expirations[day]:
-                expiry_count += 1
+        for day in range(3):
+            expiry_count += len(expirations[day])
         print("{} item(s) are expiring in 3 days".format(str(expiry_count)))
 
     """ get list of expired food """
@@ -99,20 +103,18 @@ class Inventory:
 
     """true when stuff expiring today"""
     def expiration_today_warning(self):
-        if len(self.report_expirations()[0] > 0):
-            return True
-        return False
+        return len(self.report_expirations()[0]) > 0
 
     ### HOW MANY DAYS TILL STUFF RUNS OUT ###
     """returns how many days until cals are expected to be consumed"""
-    def out_of_cals(self):
+    def cals_days_remaining(self):
         for i in range(0, 9):
             if(self.report_calories(i) < self.caloric_consumption):
                 return i
         return 10
 
     """days till protein expected to run out"""
-    def out_of_protein(self):
+    def protein_days_remaining(self):
         for i in range(0, 9):
             protein_availible = 0
             for item in self.inventory:
@@ -125,15 +127,15 @@ class Inventory:
         return 10
 
     """days till fats expected to run out"""
-    def out_of_fat(self):
+    def fats_days_remaining(self):
         for i in range(0, 9):
-            fat_availible = 0
+            fat_available = 0
             for item in self.inventory:
                 if item.expiration_date >= date.today() + timedelta(days=i):
-                    fat_availible += item.nutritional_information.get("fat")
-            fat_availible -= i * self.fats_consumption
+                    fat_available += item.nutritional_information.get("fat")
+            fat_available -= i * self.fats_consumption
 
-            if fat_availible < self.fats_consumption:
+            if fat_available < self.fats_consumption:
                 return i
         return 10
 
