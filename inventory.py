@@ -167,6 +167,24 @@ class Inventory:
                 return str(i)
         return "more than 10"
 
+    """List of all food items in order"""
+    def food_names(self):
+        names = []
+        for item in self.inventory:
+            names.append(item.name)
+        return names
+
+    def food_weights(self):
+        weights = []
+        for item in self.inventory:
+            weights.append(item.weight)
+        return weights
+
+    def food_expiration_dates(self):
+        dates = []
+        for item in self.inventory:
+            dates.append(item.expiration_date)
+        return dates
 
 
 
