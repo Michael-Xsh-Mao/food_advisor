@@ -1,4 +1,4 @@
-class nutrition:
+class Nutrition:
     def __init__(self, protein, fat, carbs):
         self.protein = protein
         self.fat = fat

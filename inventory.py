@@ -1,6 +1,7 @@
 from datetime import date
 
-class inventory:
+
+class Inventory:
     daily_intake = 0
     inventory = []
     calories_total = 0
@@ -10,20 +11,20 @@ class inventory:
         self.current_date = date.today()
 
     def set_caloric_consumption(self, cals):
-        #get the cals/day from profile obj
+        # get the cals/day from profile obj
         self.caloric_consumption = cals
 
     def report_calories(self, days):
-        #reports the number of projected calories remaining in inventory on days days from current date
+        # reports the number of projected calories remaining in inventory on days days from current date
         calories_consumed = days * self.caloric_consumption
         calories_remaining = 0
         for item in self.inventory:
-            if((item.expiration_date - self.current_date) > 0):
+            if (item.expiration_date - self.current_date) > 0:
                 calories_remaining += item.getCals()
         return max(calories_remaining - calories_consumed, 0)
 
     def generate_cal_report(self):
-        #generates a 10 day caloric report stored as array starting on current day
+        # generates a 10 day caloric report stored as array starting on current day
         caloric_report = []
         for i in range(0,9):
             caloric_report.append(self.report_calories(i))

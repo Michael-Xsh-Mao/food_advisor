@@ -1,4 +1,4 @@
-class food_obj:
+class FoodObj:
     def __init__(self, name, weight, caloric_density, expiration_date, nutritional_information):
         self.name = name
         self.weight = weight # in grams
