@@ -1,12 +1,11 @@
 from data import Data
-from GUIMain import GUIMain
+
 
 class Controller:
     d = Data()
-    GUI = GUIMain()
 
     def __init__(self):
-        # TODO PIckle file if it exists!
+        # TODO Pickle file if it exists!
         pass
 
 
@@ -17,7 +16,7 @@ class Controller:
     def inventory_status(self):
         cal_warning = self.d.get_caloric_warnings()
         exp_warning = self.d.get_expiration_warnings()
-        return(cal_warning, exp_warning)
+        return cal_warning, exp_warning
 
     """The profile's name and nutrition needs
     format : (name, caloric need, protein need, fat need"""
@@ -31,6 +30,7 @@ class Controller:
     format : (calories, proteins, fats)"""
     def nutrient_info(self):
         return self.d.get_intake()
+
     ### Warnings ###
     """warnings in no particular order, (but there could be alot)"""
     def get_all_warnings(self):
@@ -42,7 +42,6 @@ class Controller:
         warnings_list.append(self.d.protein_days_remaining())
         warnings_list.append("{} item(s) are expired!".format(str(len(self.d.inventory.get_expired_food()))))
         warnings_list.extend(self.d.inventory.get_expiration_warnings_1day())
-
 
     ####### RECEIVING FROM GUI ######
     ### Food added/eaten/trashed ###
@@ -60,6 +59,3 @@ class Controller:
         self.d.set_profile(info[0], info[1], info[2], info[3], info[4], info[5])
 
     ### Summation information about all food items ###
-
-
-
