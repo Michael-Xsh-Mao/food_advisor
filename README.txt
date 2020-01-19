@@ -26,6 +26,7 @@ aggregation of food data from the user and API that uses the Profile to assist i
 
 
 Usage of Application:
+
 The application UI is a simple display of statistics, warnings, personal metrics, and advice. It can be broken down into
 the subsequent parts:
 
@@ -36,3 +37,10 @@ shows and urgent warnings such as imminent food shortage or expiration of foods.
 The next window is used for the adding and consuming of food. When adding food, the user enters the name, amount, and
 expiration date and the food will be referenced in the API for nutrition and then added to the inventory. When consuming
 or tossing food, the name and food amount is entered and prompty consumed/deleted.
+
+The other user entry window is used for personal statistics such as age, sex, height, etc, to be input by the user.
+
+Two windows of scroll down text exist. One is the warnings window. It will display all warnings to the user such as those
+concerning food shortage, food expiration, previously expired food, macro needs, etc.
+The other scroll window displays all food items in inventory, showing the amount in grams and when that item will expire.
+
