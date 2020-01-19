@@ -1,13 +1,17 @@
 from data import Data
 from GUIMain import GUIMain
+import pickle
 
 class Controller:
-    d = Data()
     GUI = GUIMain()
 
     def __init__(self):
-        # TODO PIckle file if it exists!
-        pass
+        self.d = None
+        try:
+            self.d = pickle.load(open("inventory_pickled.py", "rb"))
+        except pickle.UnpicklingError:
+            self.d = Data()
+
 
 
     ### STUFF TO SEND TO GUI ###
@@ -58,6 +62,9 @@ class Controller:
     ### Personal info to add to profile ###
     def enter_personal_info(self, info):
         self.d.set_profile(info[0], info[1], info[2], info[3], info[4], info[5])
+        self.d.update_consumptions()
+
+
 
     ### Summation information about all food items ###
     def get_summation_strings(self):
