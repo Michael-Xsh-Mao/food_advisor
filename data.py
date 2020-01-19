@@ -10,18 +10,24 @@ class Data:
         self.profile = Profile()
         self.database = FoodDatabase()
 
-    ########## adding new food to inventory ##########
+    ########## adding/removing food to inventory ##########
     def add_food(self, name, weight, expiration_date):
         nutrients = self.database.search_food(name)
         if nutrients is None:
-            # TODO: tell user couldn't find food!
+            #TODO: tell user couldn't find food!
             return
-
+        #placeholder = {"fat" : 0, "protein" : 0, "calories" : 0}
         new_food = Food(name, weight, expiration_date, nutrients)
         self.inventory.add_food(new_food)
+    """returns nutrients consumed"""
+    def eat_food(self, name, weight):
+        return self.inventory.eat_food(name, weight)
+
+    def throw_out_food(self, name, weight):
+        self.inventory.eat_food(name, weight)
 
     ############## UPDATE PARAMETERS IN INVENTORY AND PROFILE ABOUT EACH OTHER ###################
-    def update_consumptons(self):
+    def update_consumptions(self):
         self.inventory.caloric_consumption = self.profile.calculate_caloric_need()
         self.inventory.fats_consumption = self.profile.calculate_fat_need()
         self.inventory.protein_consumption = self.profile.calculate_protein_need()
