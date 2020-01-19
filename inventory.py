@@ -30,11 +30,56 @@ class Inventory:
             caloric_report.append(self.report_calories(i))
         return caloric_report
 
-    def raise_cal_warnings(self):
+    def caloric_warnings(self):
         cal_report = self.generate_cal_report()
+        #Food defecits
         if (cal_report[0] < self.caloric_consumption):
             print("LESS THAN ONE DAY OF FOOD")
+        else:
+            for i in range(1, 9):
+                if(cal_report[i] < self.caloric_consumption): #out of food on this day!
+                    print("{} day(s) predicted until out of food!".format(str(i)))
+                    break
 
-        for i in range(1, 9):
-            if(cal_report[i] < self.caloric_consumption): #out of food on this day!
-                print("{} day(s) until out of food!".format())
+    def report_expirations(self):
+        #will not return any already expired food!
+        expirations = []
+        for i in range(0,9):
+            expirations.append([])
+
+        for food in self.inventory:
+            days_till_expiry = (food.expiration_date - self.current_date).days
+            if days_till_expiry < 10 and days_till_expiry > -1:
+                expirations[days_till_expiry].append((food.name, food.weight))
+        return expirations
+
+    def expiration_warnings(self):
+        expirations = self.report_expirations()
+        for item in expirations[0]:
+            print("{} gram(s) of {} is expiring today!".format(item[1], item[0]))
+        expiry_count = 0
+        for day in range(0,3):
+            for item in expirations[day]:
+                expiry_count += 1
+        print("{} item(s) are expiring in 3 days".format(str(expiry_count)))
+
+    def get_expired_food(self):
+        expired = []
+        for item in self.inventory:
+            if self.current_date > item.expiration_date:
+                expired.append((item.name, item.weight))
+        return expired
+
+    def getNumberExpired(self):
+        return len(self.get_expired_food())
+
+
+        
+    
+        
+        
+        
+
+
+
+
