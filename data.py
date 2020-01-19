@@ -10,7 +10,8 @@ class Data:
         self.profile = Profile()
         self.database = FoodDatabase()
 
-    ########## adding new food to inventory ##########
+    ########## adding new food to in
+    # ventory ##########
     def add_food(self, name, weight, expiration_date):
         nutrients = self.database.search_food(name)
         if nutrients is None:
