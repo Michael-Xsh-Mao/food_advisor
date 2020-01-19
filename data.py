@@ -100,6 +100,6 @@ class Data:
     def summation(self):
         final_list = []
         for i in range(0, len(self.inventory.food_names())):
-            final_list.append("{}    {}    {}".format(self.inventory.food_names[i], self.inventory.food_weights[i],
-                                                      self.inventory.food_expiration_dates[i]))
+            final_list.append("{}    {}    {}".format(self.inventory.food_names()[i], self.inventory.food_weights()[i],
+                                                      self.inventory.food_expiration_dates()[i]))
         return final_list
