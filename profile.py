@@ -1,7 +1,5 @@
 class Profile:
-
-    def __init__(self, weight, sex, activity, height, age):
-        activity_levels = \
+    activity_levels = \
         {
             1: 1.2,
             2: 1.375,
@@ -9,11 +7,20 @@ class Profile:
             4: 1.725,
             5: 1.9
         }
+    name = ""
+    def __init__(self):
+        pass
+
+    def __init__(self, name, sex, age, weight, height, activity):
+        self.set_parameters(name, sex, age, weight, height, activity)
+
+    def set_parameters(self, name, sex, age, weight, height, activity):
+        self.name = name
         self.weight = weight
         self.sex = sex
         self.height = height
         self.age = age
-        self.activity = activity_levels.get(activity)
+        self.activity = self.activity_levels.get(activity)
 
     def calculate_caloric_need(self):
         BMR = 0

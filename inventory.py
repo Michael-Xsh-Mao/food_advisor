@@ -1,5 +1,5 @@
 from datetime import date
-
+import food_obj
 
 class Inventory:
     daily_intake = 0
@@ -7,13 +7,23 @@ class Inventory:
     calories_total = 0
     caloric_consumption = 0
 
+
     def __init__(self):
+        self.current_date = date.today()
+
+    #############################UPDATE PARAMETERS######################################
+    def updateDate(self):
         self.current_date = date.today()
 
     def set_caloric_consumption(self, cals):
         # get the cals/day from profile obj
         self.caloric_consumption = cals
 
+    def add_food(self, food_item):
+        self.inventory.append(food_item)
+
+
+    #############################GET DATA STUFF AND MAKE REPORTS ###################################
     def report_calories(self, days):
         # reports the number of projected calories remaining in inventory on days days from current date
         calories_consumed = days * self.caloric_consumption
