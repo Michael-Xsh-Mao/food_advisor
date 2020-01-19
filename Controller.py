@@ -23,14 +23,14 @@ class Controller:
     format : (name, caloric need, protein need, fat need"""
     def personal_needs(self):
         name = self.d.profile.name
-        return (name, self.d.get_caloric_need(),
-                      self.d.get_protein_need(),
-                      self.d.get_fat_need())
+        return name, self.d.get_protein_need(),\
+            self.d.get_caloric_need(), self.d.get_fat_need()
 
     """information about nutrients consumed today
     format : (calories, proteins, fats)"""
     def nutrient_info(self):
         return self.d.get_intake()
+
     ### Warnings ###
     """warnings in no particular order, (but there could be alot)"""
     def get_all_warnings(self):
