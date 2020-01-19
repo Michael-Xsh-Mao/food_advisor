@@ -1,13 +1,16 @@
 import requests
+from nutrition import Nutrition
 
 
 """
 A database that stores nutritional information of food, and adds the
 data of unknown foods from the Edamam API
 
-Nutrition info is stored per 100g of food 
+Nutrition info is stored per 1g of food 
 """
 class FoodDatabase:
+
+    foods = {}
 
     def __init__(self):
         self.foods = {}
@@ -36,9 +39,9 @@ class FoodDatabase:
         if response == 200 and response.json()['parsed']:  # successful search
             nutrition_info = response.json()['parsed'][0]['food']['nutrients']
 
-            self.foods[food_name] = {"calories": nutrition_info["ENERC_KCAL"],
-                                     "protein": nutrition_info["PROCNT"],
-                                     "fat": nutrition_info["FAT"]}
+            self.foods[food_name] = Nutrition(nutrition_info["ENERC_KCAL"]/100,
+                                              nutrition_info["PROCNT"]/100,
+                                              nutrition_info["FAT"]/100)
             return self.foods[food_name]
 
         else:  # failed search
