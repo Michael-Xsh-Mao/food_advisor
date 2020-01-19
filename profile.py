@@ -20,6 +20,7 @@ class Profile:
     def __init__(self):
         pass
 
+    """ ALL UNITS ARE IN METRICT: weight - kg, height - cm"""
     def __init__(self, name, sex, age, weight, height, activity):
         self.set_parameters(name, sex, age, weight, height, activity)
 
@@ -36,9 +37,9 @@ class Profile:
     def calculate_caloric_need(self):
         BMR = 0
         if self.sex == "male":
-            BMR = 66 + (6.3 * self.weight) + (12.9 * self.height) - (6.8 * self.age)
+            BMR = 66 + (6.3 * 2.2 * self.weight) + (12.9/2.54 * self.height) - (6.8 * self.age)
         else:
-            BMR = 665 + (4.3 * self.weight) + (4.7 * self.height) - (4.7 * self.age)
+            BMR = 665 + (4.3 * 2.2* self.weight) + (4.7/2.54 * self.height) - (4.7 * self.age)
         return BMR * self.activity
 
     """calculate protein needs in grams"""
