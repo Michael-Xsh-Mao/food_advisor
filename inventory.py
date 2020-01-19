@@ -1,5 +1,5 @@
 from datetime import date
-import food
+from food import Food
 
 
 class Inventory:
@@ -9,12 +9,12 @@ class Inventory:
     calories_total = 0
     caloric_consumption = 0
 
-    # ############################        UPDATE PARAMETERS        ############################ #
+    # ################            UPDATE PARAMETERS            ################ #
     """ adds a food object to inventory """
     def add_food(self, food_item):
         self.inventory.append(food_item)
 
-    # ############################ GET DATA STUFF AND MAKE REPORTS ############################ #
+    # ################     GET DATA STUFF AND MAKE REPORTS     ################ #
     """ reports the number of projected calories remaining in inventory on days from current date """
     def report_calories(self, days):
         calories_consumed = days * self.caloric_consumption
