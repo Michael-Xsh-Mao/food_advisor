@@ -7,6 +7,7 @@ if __name__ == "__main__":
     d.update_consumptions()
     d.add_food("broccoli", 100, date(2020, 1, 11))
     d.add_food("broccoli", 100, date(2020, 1, 11))
+    d.add_food("broccoli", 100, date(2020, 1, 11))
     d.add_food("avocado", 1000, date(2020, 1, 19))
     d.add_food("rice", 3100, date(2020, 1, 30))
 

@@ -2,13 +2,17 @@ from inventory import Inventory
 from profile import Profile
 from food import Food
 from food_database import FoodDatabase
-
+from datetime import date
 
 class Data:
+    cals_today, fats_today, proteins_today = 0, 0, 0
+    last_day = date(0-0-0)
+
     def __init__(self):
         self.inventory = Inventory()
         self.profile = Profile()
         self.database = FoodDatabase()
+        last_day = date.today()
 
     ########## adding/removing food to inventory ##########
     def add_food(self, name, weight, expiration_date):
@@ -21,7 +25,19 @@ class Data:
         self.inventory.add_food(new_food)
     """returns nutrients consumed"""
     def eat_food(self, name, weight):
-        return self.inventory.eat_food(name, weight)
+        if date.today() != self.last_day:
+            self.last_day = date.today()
+            self.cals_today = 0
+            self.fats_today = 0
+            self.proteins_today = 0
+
+        newly_eaten = self.inventory.eat_food(name, weight)
+        self.cals_today += newly_eaten[0]
+        self.proteins_today += newly_eaten[1]
+        self.fats_today += newly_eaten[2]
+
+    def get_intake(self):
+        return (self.cals_today, self.proteins_today, self.fats_today)
 
     def throw_out_food(self, name, weight):
         self.inventory.eat_food(name, weight)
