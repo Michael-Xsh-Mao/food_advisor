@@ -2,26 +2,48 @@ from inventory import Inventory
 from profile import Profile
 from food import Food
 from food_database import FoodDatabase
-
+from datetime import date
 
 class Data:
+    cals_today, fats_today, proteins_today = 0, 0, 0
+    last_day = date(0-0-0)
+
     def __init__(self):
         self.inventory = Inventory()
         self.profile = Profile()
         self.database = FoodDatabase()
+        last_day = date.today()
 
-    ########## adding new food to inventory ##########
+    ########## adding/removing food to inventory ##########
     def add_food(self, name, weight, expiration_date):
         nutrients = self.database.search_food(name)
         if nutrients is None:
-            # TODO: tell user couldn't find food!
+            #TODO: tell user couldn't find food!
             return
-
+        #placeholder = {"fat" : 0, "protein" : 0, "calories" : 0}
         new_food = Food(name, weight, expiration_date, nutrients)
         self.inventory.add_food(new_food)
+    """returns nutrients consumed"""
+    def eat_food(self, name, weight):
+        if date.today() != self.last_day:
+            self.last_day = date.today()
+            self.cals_today = 0
+            self.fats_today = 0
+            self.proteins_today = 0
+
+        newly_eaten = self.inventory.eat_food(name, weight)
+        self.cals_today += newly_eaten[0]
+        self.proteins_today += newly_eaten[1]
+        self.fats_today += newly_eaten[2]
+
+    def get_intake(self):
+        return (self.cals_today, self.proteins_today, self.fats_today)
+
+    def throw_out_food(self, name, weight):
+        self.inventory.eat_food(name, weight)
 
     ############## UPDATE PARAMETERS IN INVENTORY AND PROFILE ABOUT EACH OTHER ###################
-    def update_consumptons(self):
+    def update_consumptions(self):
         self.inventory.caloric_consumption = self.profile.calculate_caloric_need()
         self.inventory.fats_consumption = self.profile.calculate_fat_need()
         self.inventory.protein_consumption = self.profile.calculate_protein_need()
