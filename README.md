@@ -1,4 +1,4 @@
-Food Advisor and Food Inventory Application:
+# Food Advisor and Food Inventory Application:
 
 Abstract:
 The application tracks food purchases and consumption, advising the user on when food is running low, when food will go
